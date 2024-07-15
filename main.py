@@ -10,7 +10,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 
 # 데이터 로드 및 전처리
-data = pd.read_csv('C:/Users/user/Desktop/agics/roboflow.csv')
+data = pd.read_csv('C:/Users/user/Desktop/agics/Painting_Creativity_Tester_01.csv')
 
 # 이미지 파일 경로 설정 (경로는 실제 환경에 맞게 조정 필요)
 image_dir = 'C:/Users/user/Desktop/agics/images/'

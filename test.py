@@ -15,7 +15,7 @@ def load_and_preprocess_image(img_path, target_size=(224, 224)):
     return img_array, img
 
 # 예측할 이미지 경로
-img_path = 'C:/Users/user/Desktop/agics/test07.png'
+img_path = 'C:/Users/user/Desktop/agics/test/test07.png'
 
 # 이미지 로드 및 전처리
 img_array, original_img = load_and_preprocess_image(img_path)
