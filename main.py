@@ -10,7 +10,9 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 
 # 데이터 로드 및 전처리
-data = pd.read_csv('C:/Users/user/Desktop/agics/Painting_Creativity_Tester_01.csv')
+data1 = pd.read_csv('C:/Users/user/Desktop/agics/Painting_Creativity_Tester_01.csv')
+data2 = pd.read_csv('C:/Users/user/Desktop/agics/Painting_Creativity_Tester_02.csv')
+data = pd.concat([data1, data2], ignore_index=True)
 
 # 이미지 파일 경로 설정 (경로는 실제 환경에 맞게 조정 필요)
 image_dir = 'C:/Users/user/Desktop/agics/images/'
@@ -71,7 +73,7 @@ model.compile(optimizer=Adam(learning_rate=0.0001), loss='mse')
 history = model.fit(
     train_generator,
     validation_data=test_generator,
-    epochs=10,
+    epochs=100,
     verbose=1
 )
 
