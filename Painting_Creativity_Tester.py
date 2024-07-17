@@ -4,6 +4,7 @@ import tensorflow as tf
 import os
 from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras.applications.vgg16 import VGG16
+from tensorflow.keras.applications.vgg19 import VGG19  # VGG19 모델 사용
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Flatten, Dropout
 from tensorflow.keras.optimizers import Adam
@@ -58,6 +59,7 @@ test_generator = test_datagen.flow_from_dataframe(
 
 # 모델 구성
 base_model = VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3)) # VGG16 모델 사용
+#base_model = VGG19(weights='imagenet', include_top=False, input_shape=(224, 224, 3)) # VGG19 모델 사용
 #base_model = ResNet50(weights='imagenet', include_top=False, input_shape=(224, 224, 3)) # ResNet50 모델 사용
 base_model.trainable = False  # 학습 중 가중치를 고정
 
@@ -75,7 +77,7 @@ model.compile(optimizer=Adam(learning_rate=0.0001), loss='mse')
 history = model.fit(
     train_generator,
     validation_data=test_generator,
-    epochs=500,
+    epochs=10,
     verbose=1
 )
 
@@ -83,4 +85,4 @@ history = model.fit(
 model.evaluate(test_generator)
 
 # 모델 저장
-model.save('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/model')
+model.save('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/model/model.keras')

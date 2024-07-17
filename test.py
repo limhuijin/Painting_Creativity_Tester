@@ -4,7 +4,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
 # 모델 로드
-model = load_model('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/model/model12.keras')
+model = load_model('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/model/model13.keras')
 
 # 이미지 로드 및 전처리 함수
 #target_size=(224, 224)는 VGG16의 기본 입력 크기에 맞춤
