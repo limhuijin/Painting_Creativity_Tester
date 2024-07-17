@@ -11,12 +11,12 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 
 # 데이터 로드 및 전처리
-data1 = pd.read_csv('C:/Users/user/Desktop/agics/csv/Painting_Creativity_Tester_03.csv')
-data2 = pd.read_csv('C:/Users/user/Desktop/agics/csv/Painting_Creativity_Tester_04.csv')
+data1 = pd.read_csv('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/csv/Painting_Creativity_Tester_05.csv')
+data2 = pd.read_csv('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/csv/Painting_Creativity_Tester_06.csv')
 data = pd.concat([data1, data2], ignore_index=True)
 
 # 이미지 파일 경로 설정 (경로는 실제 환경에 맞게 조정 필요)
-image_dir = 'C:/Users/user/Desktop/agics/images/'
+image_dir = 'C:/Users/user/Desktop/coding/Painting_Creativity_Tester/images/'
 data['image_path'] = [os.path.join(image_dir, f) + '.png' for f in data['FileName']]
 
 
@@ -75,7 +75,7 @@ model.compile(optimizer=Adam(learning_rate=0.0001), loss='mse')
 history = model.fit(
     train_generator,
     validation_data=test_generator,
-    epochs=100,
+    epochs=500,
     verbose=1
 )
 
@@ -83,4 +83,4 @@ history = model.fit(
 model.evaluate(test_generator)
 
 # 모델 저장
-model.save('C:/Users/user/Desktop/agics/model/model.keras')
+model.save('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/model')

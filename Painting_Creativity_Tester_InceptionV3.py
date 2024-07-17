@@ -10,8 +10,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 
 # 데이터 로드 및 전처리
-data1 = pd.read_csv('C:/Users/user/Desktop/agics/csv/Painting_Creativity_Tester_03.csv')
-data2 = pd.read_csv('C:/Users/user/Desktop/agics/csv/Painting_Creativity_Tester_04.csv')
+data1 = pd.read_csv('C:/Users/user/Desktop/agics/csv/Painting_Creativity_Tester_05.csv')
+data2 = pd.read_csv('C:/Users/user/Desktop/agics/csv/Painting_Creativity_Tester_06.csv')
 data = pd.concat([data1, data2], ignore_index=True)
 
 # 이미지 파일 경로 설정
