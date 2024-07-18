@@ -4,13 +4,13 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
 # 모델 로드
-model = load_model('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/model/model13.keras')
+model = load_model('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/model/model15.keras')
 
 # 이미지 로드 및 전처리 함수
 #target_size=(224, 224)는 VGG16의 기본 입력 크기에 맞춤
 #target_size=(299, 299)는 InceptionV3의 기본 입력 크기에 맞춤
 #target_size=(240, 240)는 EfficientNetB0의 기본 입력 크기에 맞춤
-def load_and_preprocess_image(img_path, target_size=(299, 299)):
+def load_and_preprocess_image(img_path, target_size=(224, 224)):
     img = image.load_img(img_path, target_size=target_size)
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)  # 차원을 추가하여 (1, height, width, channels) 형식으로 만듦

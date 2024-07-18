@@ -14,7 +14,9 @@ from sklearn.model_selection import train_test_split
 # 데이터 로드 및 전처리
 data1 = pd.read_csv('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/csv/Painting_Creativity_Tester_05.csv')
 data2 = pd.read_csv('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/csv/Painting_Creativity_Tester_06.csv')
-data = pd.concat([data1, data2], ignore_index=True)
+data3 = pd.read_csv('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/csv/Painting_Creativity_Tester_07.csv')
+data4 = pd.read_csv('C:/Users/user/Desktop/coding/Painting_Creativity_Tester/csv/Painting_Creativity_Tester_08.csv')
+data = pd.concat([data1, data2, data3, data4], ignore_index=True)
 
 # 이미지 파일 경로 설정 (경로는 실제 환경에 맞게 조정 필요)
 image_dir = 'C:/Users/user/Desktop/coding/Painting_Creativity_Tester/images/'
@@ -77,7 +79,7 @@ model.compile(optimizer=Adam(learning_rate=0.0001), loss='mse')
 history = model.fit(
     train_generator,
     validation_data=test_generator,
-    epochs=10,
+    epochs=100,
     verbose=1
 )
 
