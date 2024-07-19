@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import tensorflow as tf
+from io import BytesIO
 
 # 모델 로드
 model_path = 'C:/Users/user/Desktop/coding/Painting_Creativity_Tester/model/model15.keras'
@@ -16,6 +17,13 @@ def load_and_preprocess_image(uploaded_file, target_size=(224, 224)):
     img_array = np.expand_dims(img_array, axis=0)  # 차원을 추가하여 (1, height, width, channels) 형식으로 만듦
     img_array /= 255.0  # 0-1 스케일링
     return img_array, img
+
+# 그래프를 PNG 이미지로 변환하는 함수
+def fig_to_img(fig):
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    buf.seek(0)
+    return buf
 
 # 스트림릿 애플리케이션
 st.title("Painting Creativity Tester")
@@ -60,3 +68,12 @@ if uploaded_file is not None:
             label.set_y(-0.04)  # 홀수번째 레이블을 위로 조정
 
     st.pyplot(fig)
+
+    # 그래프를 다운로드할 수 있는 버튼 추가
+    img_buf = fig_to_img(fig)
+    st.download_button(
+        label="Download Graph as PNG",
+        data=img_buf,
+        file_name="graph.png",
+        mime="image/png"
+    )
