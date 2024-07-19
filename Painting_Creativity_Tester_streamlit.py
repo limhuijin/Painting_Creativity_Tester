@@ -27,7 +27,7 @@ def fig_to_img(fig):
 st.title("Painting Creativity Tester")
 
 # 모델 파일 업로드
-uploaded_model_file = st.file_uploader("Upload a Keras model file (.h5)...", type=["h5"])
+uploaded_model_file = st.file_uploader("Upload a Keras model file...", type=["keras"])
 
 if uploaded_model_file is not None:
     with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
