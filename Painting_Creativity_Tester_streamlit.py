@@ -5,8 +5,10 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import tensorflow as tf
 from io import BytesIO
-import tempfile
-import os
+
+# 모델 로드
+model_path = '/model15.keras'
+model = load_model(model_path)
 
 # 이미지 로드 및 전처리 함수
 def load_and_preprocess_image(uploaded_file, target_size=(224, 224)):
@@ -26,64 +28,52 @@ def fig_to_img(fig):
 # 스트림릿 애플리케이션
 st.title("Painting Creativity Tester")
 
-# 모델 파일 업로드
-uploaded_model_file = st.file_uploader("Upload a Keras model file...", type=["keras"])
+# 파일 업로드
+uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
 
-if uploaded_model_file is not None:
-    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-        tmp_file.write(uploaded_model_file.getbuffer())
-        tmp_file_path = tmp_file.name
-    model = load_model(tmp_file_path)
-    os.remove(tmp_file_path)
+if uploaded_file is not None:
+    # 이미지 로드 및 전처리
+    img_array, img = load_and_preprocess_image(uploaded_file)
     
-    # 이미지 파일 업로드
-    uploaded_image_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
+    # 이미지 표시
+    st.image(img, caption='Uploaded Image', use_column_width=True)
+    
+    # 모델을 사용하여 예측 수행
+    predictions = model.predict(img_array)
+    total_score = np.sum(predictions[0])
 
-    if uploaded_image_file is not None:
-        # 이미지 로드 및 전처리
-        img_array, img = load_and_preprocess_image(uploaded_image_file)
-        
-        # 이미지 표시
-        st.image(img, caption='Uploaded Image', use_column_width=True)
-        
-        # 모델을 사용하여 예측 수행
-        predictions = model.predict(img_array)
-        total_score = np.sum(predictions[0])
+    if total_score <= 8:
+        score_category = 'Low'
+    elif total_score <= 17:
+        score_category = 'Medium'
+    else:
+        score_category = 'High'
+    
+    # 예측 결과 출력
+    st.write("Predictions:", predictions)
+    st.write("Total Score:", total_score)
+    st.write("Category:", score_category)
 
-        if total_score <= 8:
-            score_category = 'Low'
-        elif total_score <= 17:
-            score_category = 'Medium'
-        else:
-            score_category = 'High'
-        
-        # 예측 결과 출력
-        st.write("Predictions:", predictions)
-        st.write("Total Score:", total_score)
-        st.write("Category:", score_category)
+    # 예측 결과 시각화
+    labels = ['Delicate', 'Storytelling', 'Diversity of Objects', 'Utilize space', 'Expressive']
+    fig, ax = plt.subplots()
+    ax.bar(range(len(predictions[0])), predictions[0], tick_label=labels)
+    ax.set_title(f"Predictions - Total: {total_score:.2f} ({score_category})")
+    ax.set_xlabel("Class")
+    ax.set_ylabel("Probability")
 
-        # 예측 결과 시각화
-        labels = ['Delicate', 'Storytelling', 'Diversity of Objects', 'Utilize space', 'Expressive']
-        fig, ax = plt.subplots()
-        ax.bar(range(len(predictions[0])), predictions[0], tick_label=labels)
-        ax.set_title(f"Predictions - Total: {total_score:.2f} ({score_category})")
-        ax.set_xlabel("Class")
-        ax.set_ylabel("Probability")
+    # 레이블 위치 조정
+    for i, label in enumerate(ax.xaxis.get_majorticklabels()):
+        if i % 2 != 0:
+            label.set_y(-0.04)  # 홀수번째 레이블을 위로 조정
 
-        # 레이블 위치 조정
-        for i, label in enumerate(ax.xaxis.get_majorticklabels()):
-            if i % 2 != 0:
-                label.set_y(-0.04)  # 홀수번째 레이블을 위로 조정
+    st.pyplot(fig)
 
-        st.pyplot(fig)
-
-        # 그래프를 다운로드할 수 있는 버튼 추가
-        img_buf = fig_to_img(fig)
-        st.download_button(
-            label="Download Graph as PNG",
-            data=img_buf,
-            file_name="graph.png",
-            mime="image/png"
-        )
-else:
-    st.write("Please upload a Keras model file to proceed.")
+    # 그래프를 다운로드할 수 있는 버튼 추가
+    img_buf = fig_to_img(fig)
+    st.download_button(
+        label="Download Graph as PNG",
+        data=img_buf,
+        file_name="graph.png",
+        mime="image/png"
+    )
