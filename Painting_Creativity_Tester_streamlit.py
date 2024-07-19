@@ -7,7 +7,7 @@ import tensorflow as tf
 from io import BytesIO
 
 # 모델 로드
-model_path = '/model15.keras'
+model_path = 'C:/Users/user/Desktop/coding/Painting_Creativity_Tester/model/model15.keras'
 model = load_model(model_path)
 
 # 이미지 로드 및 전처리 함수
