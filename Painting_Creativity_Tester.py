@@ -62,6 +62,8 @@ test_generator = test_datagen.flow_from_dataframe(
 
 # 모델 구성
 base_model = VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3)) # VGG16 모델 사용
+#base_model = EfficientNetB0(weights='imagenet', include_top=False, input_shape=(240, 240, 3)) # efficientnet 모델 사용
+#base_model = InceptionV3(weights='imagenet', include_top=False, input_shape=(299, 299, 3)) # InceptionV3 모델 사용
 base_model.trainable = False  # 학습 중 가중치를 고정
 
 x = Flatten()(base_model.output)
